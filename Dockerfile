@@ -11,20 +11,20 @@ RUN npm install
 # Copy rest of files (except for those in .dockerfile)
 # and compile + build into the /app/build folder
 COPY . .
-RUN npm build
+RUN npm run build
 
 # Install NGINX
 FROM nginx:alpine
 
-# Set working directory to nginx asset directory
-WORKDIR /usr/share/nginx/html
+# Copy over node files into Nginx
+COPY --from=build /app/build /usr/share/nginx.html
 
-# Remove default nginx static assets
-RUN rm -rf ./*
+# Add our own nginx.conf file, which works with React Router
+RUN rm /etc/nginx/conf.d/default.conf
+COPY nginx/nginx.conf /etc/nginx/conf.d
 
-# Copy static assets from nodebuild stage
-COPY --from=nodebuild /app/build .
+# Expose port 80
+EXPOSE 80
 
 # Containers run nginx with global directives and daemon off
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
-
+CMD ["nginx", "-g", "daemon off;"]

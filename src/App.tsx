@@ -1,16 +1,3 @@
-//import React from "react";
-//import "./Fake.scss";
-
-//function App() {
-//return (
-//<div className="App">
-//<p className="color">I am red</p>
-//</div>
-//);
-//}
-
-//export default App;
-
 import React, { useEffect } from "react";
 import { AppRouter } from "./routers";
 import ReactGA from "react-ga";
