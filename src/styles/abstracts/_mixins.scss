@@ -1,0 +1,17 @@
+@mixin menu {
+  text-decoration: none;
+  font-family: $menuFont;
+  font-size: $l;
+  color: black;
+}
+
+@mixin flex-left {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+@mixin no-margin-padding {
+  margin: 0;
+  padding: 0;
+}

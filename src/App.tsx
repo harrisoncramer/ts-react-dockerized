@@ -1,27 +1,37 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import "./Fake.scss";
+//import React from "react";
+//import "./Fake.scss";
 
-function App() {
+//function App() {
+//return (
+//<div className="App">
+//<p className="color">I am red</p>
+//</div>
+//);
+//}
+
+//export default App;
+
+import React, { useEffect } from "react";
+import { AppRouter } from "./routers";
+import ReactGA from "react-ga";
+import { ApolloProvider } from "@apollo/client";
+import client from "./graphql/client";
+
+import "./styles/index.scss";
+
+function App(): React.ReactElement {
+  useEffect(() => {
+    // Use Google Analytics
+    if (process.env.NODE_ENV === "production") {
+      ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS as string);
+      ReactGA.pageview("/");
+    }
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <p className="color">I'm red</p>
-      </header>
-    </div>
+    <ApolloProvider client={client}>
+      <AppRouter />;
+    </ApolloProvider>
   );
 }
 
