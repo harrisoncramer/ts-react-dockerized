@@ -12,12 +12,14 @@
 
 Must install `.env` files in the root of the folder for development, `.env.development` and for production, `.env.production` to run the application correctly. See the `globals.d.ts` file for the correct variables and types.
 
-## Installation
+## Development
 
-`npm install`
+First install the dependencies: `npm install`
 
-## Scripts
+Then run the application with `npm start`
 
 ## Deployment
 
-Build image and run w/ docker: `docker run -it -p 8080:80 name-of-image:image-tag`
+Build image: `docker build -t username/nginx-react-app`
+Push: `docker push username/nginx-react-app`
+Pull (on server): `docker run --rm -it -p 8080:80 kingofcramers/nginx-react:new`

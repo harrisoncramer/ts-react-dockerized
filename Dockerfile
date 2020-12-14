@@ -1,30 +1,32 @@
 # Import v14, which works with CRA
-FROM node:14 AS nodebuild
+FROM node:14 AS build
 
-# Set working directory
+# Stage 0, "build", based on Node.js, to build and compile the frontend
 WORKDIR /app
 
-# Copy package and install node modules
-COPY ./package.json /app/package.json
-RUN npm install 
+# Move package.json to app
+COPY package*.json /app/
 
-# Copy rest of files (except for those in .dockerfile)
-# and compile + build into the /app/build folder
-COPY . .
+# Build application
+RUN npm install
+
+# Copy the rest of the files
+COPY ./ /app/
+
+#RUN CI=true npm test
+
+# Build the application
 RUN npm run build
 
-# Install NGINX
-FROM nginx:alpine
+# Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
+FROM nginx:1.15
 
-# Copy over node files into Nginx
-COPY --from=build /app/build /usr/share/nginx.html
+# Copy built app from the previous stage
+COPY --from=build /app/build/ /usr/share/nginx/html
 
 # Add our own nginx.conf file, which works with React Router
 RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx/nginx.conf /etc/nginx/conf.d
-
-# Expose port 80
-EXPOSE 80
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Containers run nginx with global directives and daemon off
 CMD ["nginx", "-g", "daemon off;"]
