@@ -22,4 +22,4 @@ Then run the application with `npm start`
 
 Build image: `docker build -t username/nginx-react-app`
 Push: `docker push username/nginx-react-app`
-Pull (on server): `docker run --rm -it -p 8080:80 kingofcramers/nginx-react:new`
+Pull (on server): `docker run --rm -it -p 80:80 kingofcramers/nginx-react:new`
