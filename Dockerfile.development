@@ -1,0 +1,14 @@
+# Import v14, which works with CRA
+FROM node:14 AS build
+
+WORKDIR /app
+
+COPY package*.json /app/
+
+RUN npm install
+
+COPY . .
+
+RUN npm run start:development
+
+EXPOSE 3000

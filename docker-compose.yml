@@ -1,0 +1,16 @@
+version: "3"
+services:
+  api:
+    container_name: "ts-react"
+    image: "ts-react:${ENV}"
+    volumes:
+      - ./src:/app/src
+    restart: always
+    build:
+      context: ./
+      dockerfile: "Dockerfile.${ENV}"
+    ports:
+      - "3000:3000"
+      - "80:80"
+    env_file:
+      - ".env.${ENV}"
