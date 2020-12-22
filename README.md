@@ -23,3 +23,5 @@ To run the project (with hot reloading) run `ENV=development docker-compose up` 
 ## Production
 
 To run the application in production, run `ENV=production docker-compose up -d` which will run the application on a docker container and expose that container via PORT 80 on your local machine with `Nginx`serving as a reverse proxy, and run that in detached (`-d`) mode.
+
+To attach to that container later you can use `docker exec -it CONTAINER_NAME_OR_ID /bin/bash`
