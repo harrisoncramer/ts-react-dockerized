@@ -7,6 +7,7 @@ import client from "./graphql/client";
 import "./styles/index.scss";
 
 function App(): React.ReactElement {
+  console.log("HEY!");
   useEffect(() => {
     // Use Google Analytics
     if (process.env.NODE_ENV === "production") {
