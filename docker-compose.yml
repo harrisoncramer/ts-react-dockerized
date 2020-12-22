@@ -14,3 +14,4 @@ services:
       - "80:80"
     env_file:
       - ".env.${ENV}"
+    stdin_open: true
