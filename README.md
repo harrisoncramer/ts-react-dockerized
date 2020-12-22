@@ -20,6 +20,6 @@ See the `globals.d.ts` file for the correct variables to use inside these develo
 
 To run the project (with hot reloading) run `ENV=development docker-compose up` which will run the application inside a docker container and expose it on `http://localhost:3000` on your local machine.
 
-## Deployment
+## Production
 
-To run the application in production, run `ENV=production docker-compose up` which will run the application on a docker container and expose that container via PORT 80 on your local machine with `Nginx`serving as a reverse proxy.
+To run the application in production, run `ENV=production docker-compose up -d` which will run the application on a docker container and expose that container via PORT 80 on your local machine with `Nginx`serving as a reverse proxy, and run that in detached (`-d`) mode.
