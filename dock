@@ -1,0 +1,75 @@
+#!/bin/bash
+
+# This bash script will help you to run the docker containers quickly
+# It's a faster way of punching out the startup/end commands, log, shutdown, etc.
+# Notably, it'
+
+usage="./dock ENV CMD [--port|-p] [--detached|-d] [args] \
+
+Example: 'dock dev start -p=2222'
+Example: 'dock prod stop'
+Example: 'dock build'"
+
+if [ $# == 0 ]; then
+  echo "$usage"
+  exit;
+fi;
+
+###################
+## Get Arguments ##
+###################
+
+PORT=3000
+MAIN_ARGS=""
+DETATCHED=false
+
+for arg in "$@"
+do
+    case $arg in
+        -p=*|--port=*)
+        PORT="${arg#*=}"
+        shift # Specify a port in development
+        ;;
+        -d|--detached)
+        DETATCHED=true
+        shift  # Specify detached mode in development
+        ;;
+        *)
+        MAIN_ARGS="$MAIN_ARGS $1"
+        shift # Add main arguments (aka up/down dev/test/prod)
+        ;;
+    esac
+done
+
+args=`echo $MAIN_ARGS`
+
+
+#########################
+## Available functions ##
+#########################
+
+if [[ "$args" == "dev build" ]]; then
+    PORT="$PORT" docker-compose -f docker-compose.dev.yml build
+elif [[ "$args" == "dev start" ]]; then
+    if [[ "$DETATCHED" == "true" ]]; then
+      PORT="$PORT" docker-compose -f docker-compose.dev.yml up -d
+    else
+      PORT="$PORT" docker-compose -f docker-compose.dev.yml up 
+    fi
+elif [[ "$args" == "dev stop" ]]; then
+    PORT="$PORT" docker-compose -f docker-compose.dev.yml down
+elif [[ "$args" == "dev logs" ]]; then
+    PORT="$PORT" docker-compose -f docker-compose.dev.yml logs --follow
+elif [[ "$args" == "prod start" ]]; then
+    docker-compose -f docker-compose.prod.yml up -d
+elif [[ "$args" == "prod stop" ]]; then
+    docker-compose -f docker-compose.prod.yml down
+elif [[ "$args" == "prod build" ]]; then
+    docker-compose -f docker-compose.prod.yml build
+elif [[ "$args" == "test build" ]]; then
+    docker-compose -f docker-compose.test.yml build
+elif [[ "$args" == "test start" ]]; then
+    docker-compose -f docker-compose.test.yml run --rm react
+else
+  echo "$usage"
+fi

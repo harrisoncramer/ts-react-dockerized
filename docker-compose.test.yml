@@ -1,0 +1,22 @@
+## https://mherman.org/blog/dockerizing-a-react-app/
+version: "3"
+services:
+  react:
+    container_name: "ts-react"
+    image: "ts-react:test"
+    volumes:
+      - ./src:/app/src
+      - /app/node_modules
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    env_file:
+      - ".env.test"
+    environment:
+      ENV: "test"
+      REACT_APP_API: "http://172.21.0.2:3001/graphql"
+      REACT_APP_APP_NAME: "Cloture"
+      REACT_APP_GOOGLE_ANALYTICS: "123"
+    stdin_open: true
+    command: "npm run test"
+    tty: true
