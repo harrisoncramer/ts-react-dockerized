@@ -1,21 +1,24 @@
+#################
+## FIRST STAGE ##
+#################
+
 # Import v14, which works with CRA
-FROM node:14 AS build
-
+FROM node:14.16.0 AS stage1
 WORKDIR /app
-
-COPY package*.json /app/
-
-RUN npm install
-
-COPY . .
-
+ENV PATH /app/node_modules/.bin:$PATH
+COPY package.json ./
+COPY package-lock.json ./
+RUN npm ci --only=production
+COPY . ./
 RUN npm run build
 
-# Another stage, based on Nginx
-FROM nginx:1.15
+##################
+## SECOND STAGE ##
+##################
+FROM nginx:1.18.0-alpine
 
 # Copy built app from the previous stage into html folder to serve
-COPY --from=build /app/build/ /usr/share/nginx/html
+COPY --from=stage1 /app/build/ /usr/share/nginx/html
 
 # Add our own nginx.conf file, which works with React Router
 # Then expose port 80 for Nginx to serve up our content

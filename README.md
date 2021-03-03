@@ -12,16 +12,14 @@ This is a dockerized frontend application using React and the following technolo
 
 ## Environment
 
-Both the production and development versions of this application run inside a docker container. To get either version up and running, you must install the relevant environment file inside the root of hte project, either `.env.production` or `.env.development`
-
-See the `globals.d.ts` file for the correct variables to use inside these development files.
+Both the production and development versions of this application run inside a docker container. The required variables are included in the `docker-compose` files for each environment. You may add additional values to the `.env.development` and `.env.production` files.
 
 ## Development
 
-To run the project (with hot reloading) run `ENV=development docker-compose up` which will run the application inside a docker container and expose it on `http://localhost:3000` on your local machine.
+To run the project (with hot reloading) use the `./dock dev start` command, which is a shortcut. You may also specify to run the project on another port (by default it runs on port 3000) with the `-p=3333` flag and in detached mode with the `-d` flag. See the `./dock` script for more information.
 
 ## Production
 
-To run the application in production, run `ENV=production docker-compose up -d` which will run the application on a docker container and expose that container via PORT 80 on your local machine with `Nginx`serving as a reverse proxy, and run that in detached (`-d`) mode.
+Run the container in production and route traffic using the `./dock prod start` command. That will use the Nginx image as a reverse proxy.
 
 To attach to that container later you can use `docker exec -it CONTAINER_NAME_OR_ID /bin/bash`

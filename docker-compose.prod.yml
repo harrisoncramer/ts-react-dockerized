@@ -1,0 +1,13 @@
+version: "3"
+services:
+  react:
+    container_name: "ts-react"
+    image: "ts-react:production"
+    restart: always
+    build:
+      context: ./
+      dockerfile: ./production/Dockerfile
+    ports:
+      - "80:80"
+    env_file:
+      - ".env.production"
