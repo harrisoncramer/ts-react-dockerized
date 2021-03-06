@@ -17,7 +17,7 @@ services:
       - ".env.development"
     environment:
       ENV: "development"
-      REACT_APP_API: "http://172.21.0.2:3001/graphql"
+      REACT_APP_API: "http://localhost:1234/graphql"
       REACT_APP_APP_NAME: "Cloture"
       REACT_APP_GOOGLE_ANALYTICS: "123"
     stdin_open: true
