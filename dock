@@ -7,8 +7,8 @@
 usage="./dock ENV CMD [--port|-p] [--detached|-d] [args] \
 
 Example: 'dock dev start -p=2222'
-Example: 'dock prod stop'
-Example: 'dock build'"
+Example: 'dock dev stop'
+Example: 'dock test start'"
 
 if [ $# == 0 ]; then
   echo "$usage"
@@ -60,12 +60,6 @@ elif [[ "$args" == "dev stop" ]]; then
     PORT="$PORT" docker-compose -f docker-compose.dev.yml down
 elif [[ "$args" == "dev logs" ]]; then
     PORT="$PORT" docker-compose -f docker-compose.dev.yml logs --follow
-elif [[ "$args" == "prod start" ]]; then
-    docker-compose -f docker-compose.prod.yml up -d
-elif [[ "$args" == "prod stop" ]]; then
-    docker-compose -f docker-compose.prod.yml down
-elif [[ "$args" == "prod build" ]]; then
-    docker-compose -f docker-compose.prod.yml build
 elif [[ "$args" == "test build" ]]; then
     docker-compose -f docker-compose.test.yml build
 elif [[ "$args" == "test start" ]]; then

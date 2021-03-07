@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ts-react
+spec:
+  selector:
+    matchLabels:
+      app: ts-react # Find and manage all the apps with this label
+  replicas: 7
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 2
+  template:
+    metadata:
+      labels:
+        app: ts-react # Create apps with this label
+    spec:
+      containers:
+        - image: kingofcramers/ts-react # Pull the latest version (:latest)
+          imagePullPolicy: Always # Always pull image from Docker Hub
+          name: ts-react
+          ports:
+            - containerPort: 80

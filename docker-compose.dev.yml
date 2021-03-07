@@ -10,7 +10,7 @@ services:
     restart: always
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     ports:
       - "${PORT}:3000"
     env_file:
