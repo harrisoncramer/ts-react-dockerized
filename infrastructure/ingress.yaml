@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: ts-react-ingress
+spec:
+  rules:
+  - host: ts-react.com # We can configure this in our /etc/hosts file
+    http:
+      paths:
+      - path: / # Default path to our React App
+        backend:
+          serviceName: ts-react
+          servicePort: 80
+# This will forward every request to ts-react.com to our Kubernetes service
+# The internal service is exposed on port 80, through a ClusterIP service

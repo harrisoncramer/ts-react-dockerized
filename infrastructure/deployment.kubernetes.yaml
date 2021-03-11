@@ -2,11 +2,12 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-react
+  #namespace: ts-react
 spec:
   selector:
     matchLabels:
       app: ts-react # Find and manage all the apps with this label
-  replicas: 7
+  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -22,4 +23,18 @@ spec:
           imagePullPolicy: Always # Always pull image from Docker Hub
           name: ts-react
           ports:
-            - containerPort: 80
+            - containerPort: 80 # This is purely for informational purposes. 
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: ts-react
+  #namespace: ts-react
+spec:
+  type: ClusterIP
+  selector:
+    app: ts-react
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
