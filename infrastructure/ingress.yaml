@@ -1,15 +1,19 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: ts-react-ingress
+  name: example-ingress
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - host: ts-react.com # We can configure this in our /etc/hosts file
+  - host: ts-react.com # We'll need to configure this host correctly in AWS. On Minikube, we can edit our /etc/hosts file
     http:
       paths:
-      - path: / # Default path to our React App
-        backend:
-          serviceName: ts-react
-          servicePort: 80
-# This will forward every request to ts-react.com to our Kubernetes service
-# The internal service is exposed on port 80, through a ClusterIP service
+        - path: # Most requests should go to our normal CRA
+          backend:
+            serviceName: ts-react
+            servicePort: 80
+        - path: /graphql # Requests to our /graphql endpoint should go to our API service, typeorm, running on port 1234
+          backend:
+            serviceName: typeorm
+            servicePort: 1234
