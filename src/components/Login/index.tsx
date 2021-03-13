@@ -1,10 +1,8 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
+import { LOGIN_MUTATION } from "../../graphql/queries";
+import { useMutation } from "@apollo/client";
 
 import "./style.scss";
-
-const loginUser = async (username: string, password: string) => {
-  return "imatoken";
-};
 
 type LoginProps = {
   setToken: Dispatch<SetStateAction<null | string>>;
@@ -12,13 +10,16 @@ type LoginProps = {
 
 const Login = ({ setToken }: LoginProps) => {
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [setLogin] = useMutation(LOGIN_MUTATION, {
+    variables: { password, email },
+  });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const token = await loginUser(username, password);
-    if (token) {
-      setToken(token);
+    const res = await setLogin();
+    if (res.data?.login) {
+      setToken(res.data.login.id); // Set ID of logged in user
     }
   };
 
@@ -27,8 +28,8 @@ const Login = ({ setToken }: LoginProps) => {
       <h1>Please log in.</h1>
       <form onSubmit={handleSubmit}>
         <label>
-          <p>Username</p>
-          <input type="text" onChange={(e) => setUsername(e.target.value)} />
+          <p>Email</p>
+          <input type="text" onChange={(e) => setEmail(e.target.value)} />
         </label>
         <label>
           <p>Password</p>

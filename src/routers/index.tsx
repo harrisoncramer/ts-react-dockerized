@@ -11,6 +11,10 @@ import Login from "../components/Login";
 
 const AppRouter = (): React.ReactElement => {
   const [token, setToken] = useState<string | null>(null);
+
+  // When this page is refreshed and we have the cookie, how can we tell it to render our BrowserRouter and not the Login page?
+  // We need to take that cookie and make a request back to our server to see if its a valid user.
+
   if (token) {
     return (
       <BrowserRouter>

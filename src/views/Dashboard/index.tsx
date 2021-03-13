@@ -8,7 +8,7 @@ import TextBox from "../../components/TextBox";
 const Dashboard = (): ReactElement | null => {
   const [filter, setFilter] = useQueryParam("filter", StringParam);
 
-  const { loading, error, data, fetchMore } = useQuery(SIMPLE_QUERY);
+  const { loading, error, data } = useQuery(SIMPLE_QUERY);
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Something wrong with server: ${error.message}</div>;
 
