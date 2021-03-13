@@ -9,6 +9,7 @@ import "./styles/index.scss";
 function App(): React.ReactElement {
   useEffect(() => {
     // Use Google Analytics
+    console.log(process.env.REACT_APP_API);
     if (process.env.NODE_ENV === "production") {
       ReactGA.initialize(process.env.REACT_APP_GOOGLE_ANALYTICS as string);
       ReactGA.pageview("/");
