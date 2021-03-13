@@ -1,11 +1,11 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import { LOGIN_MUTATION } from "../../graphql/queries";
 import { useMutation } from "@apollo/client";
 
 import "./style.scss";
 
 type LoginProps = {
-  setToken: Dispatch<SetStateAction<null | string>>;
+  setToken: (token: string) => void;
 };
 
 const Login = ({ setToken }: LoginProps) => {
