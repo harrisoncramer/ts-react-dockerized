@@ -2,6 +2,7 @@ import { useState } from "react";
 
 type TokenSetter = {
   setToken: (token: string) => void;
+  removeToken: () => void;
   token: string | null;
 };
 export default function useToken(): TokenSetter {
@@ -17,8 +18,14 @@ export default function useToken(): TokenSetter {
     setToken(userToken);
   };
 
+  const removeToken = () => {
+    sessionStorage.removeItem("token");
+    setToken(null);
+  };
+
   return {
     setToken: saveToken,
+    removeToken,
     token,
   };
 }

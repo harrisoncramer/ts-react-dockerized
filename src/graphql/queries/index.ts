@@ -9,10 +9,23 @@ export const LOGIN_MUTATION = gql`
     }
   }
 `;
+
+export const LOGOUT_MUTATION = gql`
+  mutation {
+    logout
+  }
+`;
+
 export const SIMPLE_QUERY = gql`
   query {
     me {
       name
     }
+  }
+`;
+
+export const FORGOT_MUTATION = gql`
+  mutation ForgotPassword($email: String!) {
+    forgotPassword(email: $email)
   }
 `;

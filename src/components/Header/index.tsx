@@ -1,59 +1,35 @@
-import React, { useState } from "react";
-import { Drawer, IconButton } from "@material-ui/core";
-import Close from "@material-ui/icons/Close";
-import Menu from "@material-ui/icons/Menu";
-
-import Links from "./links";
+import React from "react";
+import { useHistory } from "react-router";
+import { LOGOUT_MUTATION } from "../../graphql/queries";
+import { useMutation } from "@apollo/client";
 
 import "./style.scss";
 
-const Header = function Header() {
-  const [mobileOpen, setMobileOpen] = useState(false);
+type HeaderProps = {
+  removeToken: () => void;
+};
+const Header = function Header({ removeToken }: HeaderProps) {
+  const history = useHistory();
+  const [logout] = useMutation(LOGOUT_MUTATION);
 
   const handleGoHome = () => {
-    //history.push("/");
+    history.push("/");
   };
 
-  function handleDrawerToggle() {
-    setMobileOpen(!mobileOpen);
-  }
+  const handleLogout = async () => {
+    // Make Logout Query to backend
+    await logout();
+    removeToken();
+  };
 
   return (
     <header className="header shadow">
-      <nav>
-        <IconButton
-          data-testid="menuButton"
-          onClick={handleDrawerToggle}
-          className="menuButton pointer"
-        >
-          <Menu />
-        </IconButton>
-        <h1 onClick={handleGoHome} className="mainTitle pointer">
-          {process.env.REACT_APP_APP_NAME}
-        </h1>
-        <Drawer
-          className="drawer"
-          data-testid="drawer"
-          anchor={"left"}
-          open={mobileOpen}
-          onClose={handleDrawerToggle}
-        >
-          <IconButton
-            data-testid="closeButton"
-            className="close"
-            onClick={handleDrawerToggle}
-          >
-            <Close />
-          </IconButton>
-          <Links
-            setMobileOpen={setMobileOpen}
-            links={[
-              { label: "Dashboard", link: "/" },
-              { label: "About", link: "/about" },
-            ]}
-          />
-        </Drawer>
-      </nav>
+      <h1 onClick={handleGoHome} className="mainTitle pointer">
+        {process.env.REACT_APP_APP_NAME}
+      </h1>
+      <h3 onClick={handleLogout}>
+        <p>Logout</p>
+      </h3>
     </header>
   );
 };
