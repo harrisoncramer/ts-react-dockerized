@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { LOGIN_MUTATION } from "../../graphql/queries";
 import { useMutation } from "@apollo/client";
-import Forgot from "../Forgot";
+import { useHistory } from "react-router-dom";
 
 import "./style.scss";
 
@@ -16,23 +16,24 @@ const Login = ({ setToken }: LoginProps) => {
   const [setLogin] = useMutation(LOGIN_MUTATION, {
     variables: { password, email },
   });
-  const [forgot, setForgot] = useState(false);
+
+  const history = useHistory();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const res = await setLogin();
-    if (res.data?.login) {
-      setToken(res.data.login.id); // Set ID of logged in user
-    } else {
-      setError(true);
-    }
+    setLogin()
+      .then((res) => {
+        console.log("SUCCESS");
+        setToken(res.data.login.id); // Set ID of logged in user
+      })
+      .catch((err) => {
+        setError(true);
+      });
   };
 
-  return forgot ? (
-    <Forgot setError={setError} setForgot={setForgot} />
-  ) : (
+  return (
     <div className="login-wrapper">
-      <h1>Please log in.</h1>
+      <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <label>
           <p>Email</p>
@@ -50,8 +51,11 @@ const Login = ({ setToken }: LoginProps) => {
         </div>
       </form>
       {error && <div className="error">The email or password is incorrect</div>}
-      <div>
-        <p onClick={() => setForgot(true)}>Forgot password</p>
+      <div className="login-notice">
+        <p onClick={() => history.push("/signup")}>Create an account</p>
+      </div>
+      <div className="login-notice">
+        <p onClick={() => history.push("/forgot")}>Forgot password</p>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import React from "react";
 import { useHistory } from "react-router";
 import { LOGOUT_MUTATION } from "../../graphql/queries";
 import { useMutation } from "@apollo/client";
+import client from "../../graphql/client";
 
 import "./style.scss";
 
@@ -18,8 +19,13 @@ const Header = function Header({ removeToken }: HeaderProps) {
 
   const handleLogout = async () => {
     // Make Logout Query to backend
-    await logout();
-    removeToken();
+    try {
+      await client.cache.reset();
+      await logout();
+      removeToken();
+    } catch (err) {
+      console.log("Could not log out...");
+    }
   };
 
   return (
@@ -27,8 +33,8 @@ const Header = function Header({ removeToken }: HeaderProps) {
       <h1 onClick={handleGoHome} className="mainTitle pointer">
         {process.env.REACT_APP_APP_NAME}
       </h1>
-      <h3 onClick={handleLogout}>
-        <p>Logout</p>
+      <h3 onClick={handleLogout} className="pointer logout">
+        Logout
       </h3>
     </header>
   );

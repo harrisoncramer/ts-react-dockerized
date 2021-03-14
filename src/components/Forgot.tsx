@@ -1,14 +1,10 @@
 import React, { useState } from "react";
 import { FORGOT_MUTATION } from "../graphql/queries";
 import { useMutation } from "@apollo/client";
+import { useHistory } from "react-router-dom";
 
 import "./style.scss";
-type ForgotInput = {
-  setForgot: React.Dispatch<React.SetStateAction<boolean>>;
-  setError: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-const Forgot = ({ setForgot, setError }: ForgotInput) => {
+const Forgot = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [isSent, setIsSent] = useState(false);
@@ -16,6 +12,8 @@ const Forgot = ({ setForgot, setError }: ForgotInput) => {
   const [sendForgotEmail] = useMutation(FORGOT_MUTATION, {
     variables: { email },
   });
+
+  const history = useHistory();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,21 +27,18 @@ const Forgot = ({ setForgot, setError }: ForgotInput) => {
     setIsLoading(false);
   };
 
-  const handleReturnToLogin = () => {
-    setError(false);
-    setForgot(false);
-  };
+  const returnToLogin = () => history.push("/");
 
   return isSent ? (
     <div className="login-wrapper">
       <div>Please check your email ({email}) for a password reset link.</div>
       <div>
-        <button onClick={handleReturnToLogin}>Login</button>
+        <button onClick={returnToLogin}>Login</button>
       </div>
     </div>
   ) : (
     <div className="login-wrapper">
-      <h1>Please enter email to recieve a password reset.</h1>
+      <h1>What's my password?</h1>
       {!isLoading ? (
         <form onSubmit={handleSubmit}>
           <label>
@@ -57,8 +52,8 @@ const Forgot = ({ setForgot, setError }: ForgotInput) => {
       ) : (
         <div>Sending email...</div>
       )}
-      <div>
-        <p onClick={handleReturnToLogin}>I know my password</p>
+      <div className="login-notice">
+        <p onClick={returnToLogin}>I know my password</p>
       </div>
       {emailError && <div className="error">Could not send email.</div>}
     </div>

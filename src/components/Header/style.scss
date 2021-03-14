@@ -4,14 +4,25 @@
   position: sticky;
   top: 0;
   left: 0;
-  width: 100%;
   background-color: $primaryColor;
   padding: $s;
+
   h1.mainTitle {
     @include flex-left;
+    display: inline-block;
     font-family: $titleFont;
     font-size: $h1FontSize;
     color: white;
     margin: 0;
+  }
+  nav {
+    float: left;
+  }
+  h3.logout {
+    float: right;
+    color: white;
+    align-items: center;
+    font-family: $titleFont;
+    font-size: $h3FontSize;
   }
 }
