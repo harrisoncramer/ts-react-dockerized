@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import { Link } from "react-router-dom";
-import { ListItem } from "@material-ui/core";
 
 interface LinkType {
   label: string;
@@ -23,9 +22,7 @@ export default function Links({
     <ul>
       {links.map(({ link, label }) => (
         <Link key={link} to={link} onClick={() => handleGoToLink()}>
-          <ListItem button key={link}>
-            {label}
-          </ListItem>
+          <div>Hi</div>
         </Link>
       ))}
     </ul>

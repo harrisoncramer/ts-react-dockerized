@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { QueryParamProvider } from "use-query-params";
 
 import Dashboard from "../views/Dashboard";
@@ -11,6 +11,7 @@ import Login from "../components/Login";
 import useToken from "../hooks/useToken";
 import Forgot from "../components/Forgot";
 import Signup from "../components/Signup";
+import Settings from "../components/Settings";
 
 function AppRouter() {
   const { token, setToken, removeToken } = useToken();
@@ -40,6 +41,9 @@ function AppRouter() {
     // Private
     return (
       <BrowserRouter>
+        <Route exact path="/signup">
+          <Redirect to="/" />
+        </Route>
         <QueryParamProvider ReactRouterRoute={Route}>
           <Header removeToken={removeToken} />
           <Switch>
@@ -48,6 +52,9 @@ function AppRouter() {
             </Route>
             <Route path="/about">
               <About />
+            </Route>
+            <Route path="/settings">
+              <Settings />
             </Route>
             <Route>
               <NotFound />

@@ -8,7 +8,6 @@
   padding: $s;
 
   h1.mainTitle {
-    @include flex-left;
     display: inline-block;
     font-family: $titleFont;
     font-size: $h1FontSize;

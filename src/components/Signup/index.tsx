@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { SIGNUP_MUTATION } from "../../graphql/queries";
 import { useHistory } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
+
+import "./styles.scss";
 
 type SignupProps = {
   setToken: (arg: string) => void;
@@ -11,7 +14,6 @@ const Signup = ({ setToken }: SignupProps) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [setSignup] = useMutation(SIGNUP_MUTATION, {
     variables: { password, email, name },
   });
@@ -20,44 +22,54 @@ const Signup = ({ setToken }: SignupProps) => {
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
     setSignup()
       .then((res) => {
-        setToken(res.data.register.id);
+        console.log(res);
+        setToken(res.data.register.id); // This will trigger a re-render, we'll catch + reroute signup page w/credentials to our main dashboard
       })
       .catch((err) => {
         setError(true);
-        console.log(err);
+        console.error(err);
       });
-    setIsLoading(false);
   };
 
   return (
-    <div className="login-wrapper">
-      <h1>Signup</h1>
-      <form onSubmit={handleSignup}>
-        <label>
-          <p>Email</p>
-          <input type="email" onChange={(e) => setEmail(e.target.value)} />
-        </label>
-        <label htmlFor="name">
-          <p>Name</p>
-          <input type="text" onChange={(e) => setName(e.target.value)} />
-        </label>
-        <label>
-          <p>Password</p>
-          <input
+    <div className="signup-wrapper">
+      <Form onSubmit={handleSignup}>
+        <Form.Group controlId="formBasicName">
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Username"
+            onChange={(e) => setName(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group controlId="formBasicEmail">
+          <Form.Label>Email address</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Enter email"
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Form.Text className="text-muted">
+            We'll never share your email with anyone else.
+          </Form.Text>
+        </Form.Group>
+        <Form.Group controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
             type="password"
+            placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-        </label>
-        <div>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-      <div className="login-notice">
-        <p onClick={() => history.push("/")}>I already have an account.</p>
-      </div>
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Submit
+        </Button>
+      </Form>
+      <Button variant="primary" size="sm" onClick={() => history.push("/")}>
+        I already have an account
+      </Button>
       {error && (
         <div className="error">There was a problem signing you up.</div>
       )}

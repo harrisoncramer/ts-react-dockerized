@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FORGOT_MUTATION } from "../graphql/queries";
 import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
+import { Button, Form, FormControl } from "react-bootstrap";
 
 import "./style.scss";
 const Forgot = () => {
@@ -38,23 +39,19 @@ const Forgot = () => {
     </div>
   ) : (
     <div className="login-wrapper">
-      <h1>What's my password?</h1>
-      {!isLoading ? (
-        <form onSubmit={handleSubmit}>
-          <label>
-            <p>Email</p>
-            <input type="email" onChange={(e) => setEmail(e.target.value)} />
-          </label>
-          <div>
-            <button type="submit">Submit</button>
-          </div>
-        </form>
-      ) : (
-        <div>Sending email...</div>
-      )}
-      <div className="login-notice">
-        <p onClick={returnToLogin}>I know my password</p>
-      </div>
+      <h2 className="login-header">What's my password?</h2>
+      <Form inline onSubmit={handleSubmit}>
+        <FormControl
+          type="text"
+          placeholder="Email"
+          className="mr-sm-2"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <Button variant="outline-success">Send</Button>
+      </Form>
+      <Button variant="secondary" size="sm" onClick={returnToLogin}>
+        I know my password
+      </Button>
       {emailError && <div className="error">Could not send email.</div>}
     </div>
   );
