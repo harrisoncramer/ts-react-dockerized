@@ -1,4 +1,4 @@
-import React, { ReactElement, useEffect } from "react";
+import React, { ReactElement } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { useQueryParam, StringParam } from "use-query-params";
 import { SIMPLE_QUERY } from "../../graphql/queries";
@@ -18,9 +18,6 @@ const Dashboard = (): ReactElement | null => {
   const { loading, error, data } = useQuery(SIMPLE_QUERY, {
     fetchPolicy: "no-cache",
   });
-
-  // The cookie + localsession are not getting set upon client creation...
-  console.log(error, loading, data);
 
   const handleOnChange = (val: string): void => {
     setFilter(val);
@@ -54,14 +51,7 @@ const Dashboard = (): ReactElement | null => {
           </Form>
         </Navbar.Collapse>
       </Navbar>
-      <TextBox
-        placeholder="Search..."
-        word={filter || ""}
-        callBack={handleOnChange}
-      />
       <p>Welcome, {data.me.name}</p>
-      <p>{filter}</p>
-      <p>Data is {JSON.stringify(data)}</p>
     </div>
   );
 };
