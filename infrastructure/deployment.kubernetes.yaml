@@ -2,12 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ts-react
-  #namespace: ts-react
 spec:
   selector:
     matchLabels:
       app: ts-react # Find and manage all the apps with this label
-  replicas: 1
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -16,20 +14,20 @@ spec:
   template:
     metadata:
       labels:
-        app: ts-react # Create apps with this label
+        app: ts-react # Create apps with this label (must match)
     spec:
       containers:
-        - image: kingofcramers/ts-react # Pull the latest version (:latest)
-          imagePullPolicy: Always # Always pull image from Docker Hub
+        - image: kingofcramers/ts-react
+          imagePullPolicy: Always 
           name: ts-react
           ports:
             - containerPort: 80 # This is purely for informational purposes. 
 ---
+# This exposes our service to our Ingress controller...
 kind: Service
 apiVersion: v1
 metadata:
   name: ts-react
-  #namespace: ts-react
 spec:
   type: ClusterIP
   selector:
@@ -37,4 +35,4 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 80 # This will send the traffic to port 80 on our selected app...

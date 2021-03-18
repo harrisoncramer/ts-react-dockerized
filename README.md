@@ -1,4 +1,4 @@
-# ⚡ Containerized React/Typescript w/ Nginx Reverse Proxy
+# Containerized React/Typescript w/ Nginx Reverse Proxy
 
 This is a dockerized frontend application using React and the following technologies:
 
