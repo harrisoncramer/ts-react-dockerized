@@ -12,6 +12,7 @@ import useToken from "../hooks/useToken";
 import Forgot from "../components/Forgot";
 import Signup from "../components/Signup";
 import Settings from "../components/Settings";
+import ResetPassword from "../components/ResetPassword";
 
 function AppRouter() {
   const { token, setToken, removeToken } = useToken();
@@ -33,6 +34,11 @@ function AppRouter() {
         <Switch>
           <Route path="/forgot">
             <Forgot />
+          </Route>
+        </Switch>
+        <Switch>
+          <Route path="/user/forgot-password/:token">
+            <ResetPassword />
           </Route>
         </Switch>
       </BrowserRouter>

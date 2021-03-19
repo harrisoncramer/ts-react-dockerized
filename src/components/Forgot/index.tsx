@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { FORGOT_MUTATION } from "../graphql/queries";
+import { FORGOT_MUTATION } from "../../graphql/queries";
 import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { Button, Form, FormControl } from "react-bootstrap";
 
-import "./style.scss";
+//import "./style.scss";
 const Forgot = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState(false);

@@ -34,6 +34,16 @@ export const SIMPLE_QUERY = gql`
   }
 `;
 
+export const CHANGE_PASSWORD_MUTATION = gql`
+  mutation ChangePassword($password: String!, $token: String!) {
+    changePassword(input: { password: $password, token: $token }) {
+      email
+      name
+      id
+    }
+  }
+`;
+
 export const FORGOT_MUTATION = gql`
   mutation ForgotPassword($email: String!) {
     forgotPassword(email: $email)
