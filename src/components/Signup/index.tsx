@@ -25,12 +25,10 @@ const Signup = ({ setToken }: SignupProps) => {
     e.preventDefault();
     setSignup()
       .then((res) => {
-        console.log(res);
         setToken(res.data.register.id); // This will trigger a re-render, we'll catch + reroute signup page w/credentials to our main dashboard
       })
       .catch((err) => {
         setError(true);
-        console.error(err);
       });
   };
 

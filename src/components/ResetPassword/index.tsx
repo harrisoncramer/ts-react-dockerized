@@ -3,6 +3,7 @@ import { CHANGE_PASSWORD_MUTATION } from "../../graphql/queries";
 import { useMutation } from "@apollo/client";
 import { useHistory, useParams } from "react-router-dom";
 import { Button, Form, FormControl } from "react-bootstrap";
+import Modal from "../Modal";
 
 //import "./style.scss";
 
@@ -13,7 +14,8 @@ type QueryParams = {
 const ResetPassword = () => {
   const { token }: QueryParams = useParams();
   const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [changePassword] = useMutation(CHANGE_PASSWORD_MUTATION, {
     variables: { password, token },
   });
@@ -22,17 +24,22 @@ const ResetPassword = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      await changePassword();
-      history.push("/");
-    } catch (err) {
-      console.log(err);
-    }
+    setLoading(true);
+    changePassword()
+      .then(() => {
+        history.push("/");
+      })
+      .catch((err) => {
+        setError(true);
+      })
+      .finally(() => setLoading(false));
   };
 
   const returnToLogin = () => history.push("/");
 
-  return (
+  return loading ? (
+    <div>Loading...</div>
+  ) : (
     <div className="login-wrapper">
       <h2 className="login-header">New password:</h2>
       <Form inline onSubmit={handleSubmit}>
@@ -47,6 +54,11 @@ const ResetPassword = () => {
       <Button variant="secondary" size="sm" onClick={returnToLogin}>
         I remembered my password, just return me to the login page.
       </Button>
+      {error && (
+        <Modal show={error} setShow={setError} heading="Password reset failed.">
+          <div>Something went wrong. We could not reset the password.</div>
+        </Modal>
+      )}
     </div>
   );
 };

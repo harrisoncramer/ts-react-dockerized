@@ -7,9 +7,9 @@ import { Button, Form, FormControl } from "react-bootstrap";
 //import "./style.scss";
 const Forgot = () => {
   const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState(false);
+  const [error, setError] = useState(false);
   const [isSent, setIsSent] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [sendForgotEmail] = useMutation(FORGOT_MUTATION, {
     variables: { email },
   });
@@ -18,26 +18,36 @@ const Forgot = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
-    const res = await sendForgotEmail();
-    if (res.data?.forgotPassword) {
-      setIsSent(true);
-    } else {
-      setEmailError(true);
-    }
-    setIsLoading(false);
+    setLoading(true);
+    sendForgotEmail()
+      .then((res) => {
+        if (res.data?.forgotPassword) {
+          setIsSent(true);
+        } else {
+          setError(true);
+        }
+      })
+      .catch((err) => {
+        setError(true);
+      })
+      .finally(() => setLoading(false));
   };
 
   const returnToLogin = () => history.push("/");
 
-  return isSent ? (
-    <div className="login-wrapper">
-      <div>Please check your email ({email}) for a password reset link.</div>
-      <div>
-        <button onClick={returnToLogin}>Login</button>
+  if (isSent)
+    return (
+      <div className="login-wrapper">
+        <div>Please check your email ({email}) for a password reset link.</div>
+        <div>
+          <button onClick={returnToLogin}>Login</button>
+        </div>
       </div>
-    </div>
-  ) : (
+    );
+
+  if (loading) return <div>Loading...</div>;
+
+  return (
     <div className="login-wrapper">
       <h2 className="login-header">What's my password?</h2>
       <Form inline onSubmit={handleSubmit}>
@@ -54,7 +64,7 @@ const Forgot = () => {
       <Button variant="secondary" size="sm" onClick={returnToLogin}>
         I know my password
       </Button>
-      {emailError && <div className="error">Could not send email.</div>}
+      {error && <div className="error">Could not send email.</div>}
     </div>
   );
 };

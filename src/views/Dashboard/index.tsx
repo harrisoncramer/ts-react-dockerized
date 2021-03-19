@@ -20,7 +20,7 @@ const Dashboard = (): ReactElement | null => {
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(filter);
+    //console.log(filter);
   };
 
   const handleOnChange = (val: string): void => {
