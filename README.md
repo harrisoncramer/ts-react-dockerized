@@ -6,9 +6,8 @@ This is a dockerized frontend application using React and the following technolo
 - React Router for routing
 - Google Analytics for usage tracking and metrics
 - Jest for Testing
-- Material-UI components for boostrapping
-- Node-Sass for CSS
-- Use-Query-Params for query string parsing
+- React Bootstrap
+- Node-Sass for SCSS
 
 It's built to use a GraphQL backend, like [this](https://github.com/KingOfCramers/typeorm-typegrapqhl-api) one.
 
