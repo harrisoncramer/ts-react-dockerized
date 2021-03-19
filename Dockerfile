@@ -18,8 +18,12 @@ RUN npm run build
 FROM nginx:1.18.0-alpine
  
 # Delete default nginx server configuration
-#RUN rm /etc/nginx/conf.d/default.conf
-#COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+RUN rm /etc/nginx/conf.d/default.conf
+
+# Our Application's NGINX server will be configured inside
+# the kubernetes deployment file. This will allow us to
+# make changes to our server's routing with ConfigMaps
+# And without having to rebuild the Docker image.
 
 # Copy built app from the previous stage into html folder to serve
 COPY --from=stage1 /app/build/ /usr/share/nginx/html

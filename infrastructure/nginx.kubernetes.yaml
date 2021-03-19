@@ -4,6 +4,10 @@ metadata:
   name: nginx-conf
 data:
   nginx.conf: |
+
+    ## To make changes to the configuration
+    ## You use the kubectl rollout restart nginx command.
+
     events {}
     http {
 
@@ -19,6 +23,10 @@ data:
           root /usr/share/nginx/html;
           index index.html index.htm;
           try_files $uri $uri/ /index.html =404;
+        }
+
+        location /trash {
+          return 200 "Hi. Is this finally working?";
         }
 
         #location /api {
@@ -49,17 +57,14 @@ spec:
         ports:
           - containerPort: 80
         volumeMounts:
-            - name: nginx-conf
-              mountPath: /etc/nginx/nginx.conf
-              subPath: nginx.conf
-              readOnly: true
+          - name: nginx-conf
+            mountPath: /etc/nginx/nginx.conf
+            subPath: nginx.conf
+            readOnly: true
       volumes:
-      - name: nginx-conf
-        configMap:
-          name: nginx-conf
-          items:
-            - key: nginx.conf
-              path: nginx.conf
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf
 ---
 apiVersion: v1
 kind: Service
