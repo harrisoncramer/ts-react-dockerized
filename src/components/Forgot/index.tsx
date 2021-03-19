@@ -42,7 +42,7 @@ const Forgot = () => {
       <h2 className="login-header">What's my password?</h2>
       <Form inline onSubmit={handleSubmit}>
         <FormControl
-          type="text"
+          type="email"
           placeholder="Email"
           className="mr-sm-2"
           onChange={(e) => setEmail(e.target.value)}

@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 import { SIGNUP_MUTATION } from "../../graphql/queries";
 import { useHistory } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
+import Modal from "../Modal";
 
 import "./styles.scss";
 
@@ -35,6 +36,7 @@ const Signup = ({ setToken }: SignupProps) => {
 
   return (
     <div className="signup-wrapper">
+      <h1>Signup</h1>
       <Form onSubmit={handleSignup}>
         <Form.Group controlId="formBasicName">
           <Form.Label>Username</Form.Label>
@@ -71,7 +73,11 @@ const Signup = ({ setToken }: SignupProps) => {
         I already have an account
       </Button>
       {error && (
-        <div className="error">There was a problem signing you up.</div>
+        <Modal show={error} setShow={setError} heading="Signup Error.">
+          <div>
+            There was a problem signing you up. Do you have an account already?
+          </div>
+        </Modal>
       )}
     </div>
   );
