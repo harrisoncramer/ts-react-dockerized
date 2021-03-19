@@ -59,7 +59,11 @@ const Login = ({ setToken }: LoginProps) => {
         </Button>
       </Form>
       {error && (
-        <Modal show={error} setShow={setError} heading="Wrong Password.">
+        <Modal
+          show={error}
+          setShow={setError}
+          heading="Wrong login credentials."
+        >
           <div>You either entered the wrong password or email.</div>
         </Modal>
       )}
