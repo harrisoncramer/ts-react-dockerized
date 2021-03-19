@@ -9,14 +9,11 @@ spec:
   - host: my-nginx.com 
     http:
       paths:
-        - path: 
+        - path: /
           backend:
             serviceName: nginx
             servicePort: 80
-  - host: ts-react.com # Use our /etc/hosts file to point to our Minikube cluster
-    http:
-      paths:
-        - path: # Send our traffic to port 80 through the ClusterIP service ts-react
+        - path: /graphql
           backend:
-            serviceName: ts-react
-            servicePort: 80
+            serviceName: typeorm
+            servicePort: 1234
