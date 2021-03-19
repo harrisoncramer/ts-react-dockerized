@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "../../util/tests";
-import NotFound from "./index";
+import NotFound from "./NotFound";
 
 describe("NotFound", () => {
   it("should render the NotFound view", () => {
