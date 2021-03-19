@@ -4,23 +4,26 @@ metadata:
   name: nginx-conf
 data:
   nginx.conf: |
-    user nginx;
-    worker_processes  1;
-    events {
-    }
+    events {}
     http {
       server {
+
         listen 80;
-        
+
         location / {
           root /usr/share/nginx/html;
           index index.html index.htm;
           try_files $uri $uri/ /index.html =404;
         }
-        
+
+        #location /api {
+        ## Send traffic to my API here...
+        #}
+
         include /etc/nginx/extra-conf.d/*.conf;
+
+        }
       }
-    }
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -38,9 +41,10 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: "nginx:1.18.0-alpine"
+        image: kingofcramers/ts-react
+        imagePullPolicy: Always 
         ports:
-        - containerPort: 80
+          - containerPort: 80
         volumeMounts:
             - name: nginx-conf
               mountPath: /etc/nginx/nginx.conf
