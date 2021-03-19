@@ -6,6 +6,11 @@ data:
   nginx.conf: |
     events {}
     http {
+
+      include /etc/nginx/mime.types;
+      include /etc/nginx/conf.d/*.conf;
+      include /etc/nginx/extra-conf.d/*.conf;
+
       server {
 
         listen 80;
@@ -19,8 +24,6 @@ data:
         #location /api {
         ## Send traffic to my API here...
         #}
-
-        include /etc/nginx/extra-conf.d/*.conf;
 
         }
       }
