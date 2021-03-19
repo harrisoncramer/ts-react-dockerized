@@ -47,7 +47,9 @@ const Forgot = () => {
           className="mr-sm-2"
           onChange={(e) => setEmail(e.target.value)}
         />
-        <Button variant="outline-success">Send</Button>
+        <Button variant="outline-success" type="submit">
+          Send
+        </Button>
       </Form>
       <Button variant="secondary" size="sm" onClick={returnToLogin}>
         I know my password
