@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { AppRouter } from "./routers";
+import { Router } from "./routers/Router";
 import ReactGA from "react-ga";
 import { ApolloProvider } from "@apollo/client";
 import client from "./graphql/client";
@@ -18,7 +18,7 @@ function App(): React.ReactElement {
 
   return (
     <ApolloProvider client={client}>
-      <AppRouter />;
+      <Router />;
     </ApolloProvider>
   );
 }

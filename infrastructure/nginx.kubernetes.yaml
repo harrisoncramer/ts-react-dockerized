@@ -26,12 +26,8 @@ data:
         }
 
         location /trash {
-          return 200 "Hi. Is this finally working?";
+          return 200 "Hi. This is an internal route.";
         }
-
-        #location /api {
-        ## Send traffic to my API here...
-        #}
 
         }
       }
@@ -65,16 +61,3 @@ spec:
         - name: nginx-conf
           configMap:
             name: nginx-conf
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: nginx
-spec:
-  type: ClusterIP
-  ports:
-  - port: 80
-    protocol: TCP
-    targetPort: 80
-  selector:
-    app: nginx 

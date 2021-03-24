@@ -1,6 +1,6 @@
 import React from "react";
 import { render } from "../../util/tests";
-import About from "./index";
+import About from "./About";
 
 describe("About", () => {
   it("should render the About view", () => {

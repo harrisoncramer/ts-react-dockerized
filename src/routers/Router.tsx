@@ -3,18 +3,18 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { QueryParamProvider } from "use-query-params";
 
 import Dashboard from "../views/Dashboard";
-import About from "../views/About";
-import NotFound from "../views/NotFound";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import Login from "../components/Login";
+import About from "../views/About/About";
+import NotFound from "../views/NotFound/NotFound";
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
+import Login from "../components/Login/Login";
 import useToken from "../hooks/useToken";
-import Forgot from "../components/Forgot";
-import Signup from "../components/Signup";
-import Settings from "../components/Settings";
-import ResetPassword from "../components/ResetPassword";
+import Forgot from "../components/Forgot/Forgot";
+import Signup from "../components/Signup/Signup";
+import Settings from "../components/Settings/Settings";
+import ResetPassword from "../components/ResetPassword/ResetPassword";
 
-function AppRouter() {
+export function Router() {
   const { token, setToken, removeToken } = useToken();
 
   if (!token) {
@@ -72,5 +72,3 @@ function AppRouter() {
     );
   }
 }
-
-export { AppRouter };
