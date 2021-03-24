@@ -1,4 +1,4 @@
-# Containerized React/Typescript w/ Nginx Reverse Proxy
+# 🚀 Containerized Typescript React Application
 
 This is a dockerized frontend application using React and the following technologies:
 
@@ -13,15 +13,27 @@ It's built to use a GraphQL backend, like [this](https://github.com/KingOfCramer
 
 ## Development
 
-1. Define any additional development variables inside a .env.development file. By default, the .env.development file doesn't require any variables, but it must exist.
-2. You can start up the server with the `./dock dev start` by using the supplied bash script. You may also specify to run the project on another port (by default it runs on port 3000) with the `-p=3333` flag and in detached mode with the `-d` flag. See the `./dock` script for more information.
+1. Define any additional development variables inside a `.env.development` file. By default, the `.env.development` file doesn't require any variables, but it must exist.
+2. You can start up the server with the `./dock dev start` by using the supplied bash script. Alternatively, run the `docker-compose` command by hand: `PORT=3000 docker-compose -f docker-compose.dev.yml up` which will run your application locally, and expose it on `http://localhost:3000`
 
 ## Testing
 
-Use the supplied script: `./dock test start` which will run your scripts inside the Docker container with Jest.
+1. Define any additional variables inside a `.env.test` file. By default, the `.env.test` file doesn't require any variables, but it must exist.
+2. Run tests with the `./dock test start` command, or run the `docker-compose` command by hand: `docker-compose -f docker-compose.test.yml run --rm react_test`
 
 ## Production
 
-This project is designed to be deployed to Kubernetes for production. The Ingress controller points to an Nginx service, which will supply your application. The `yaml` files containing the configuration for both of these resources are inside the `infrastructure` folder. 
+In production, this application is built into static assets and served up with Nginx.
 
-NOTE: The `yaml` files as-written are directing traffic internal to your cluster to another service called `typeorm` that has a ClusterIP exposed. You will need to setup this [API](https://github.com/KingOfCramers/typeorm-typegrapqhl-api) to respond to these requests. You can theoretically use any GraphQL API that will respond appropriately to the GraphQL requests. See the `src/graphql/queries/index.ts` file for the GQL queries.
+The full application is designed to be run through kubernetes. The configuration files are stored inside the `infrastructure` folder. There is a separate readme for configuring your cluster contained in that folder.
+
+## Installing NPM Packages (development)
+
+1. Install in the running container `docker exec typeorm-api npm install PACKAGE_NAMES`
+2. Install the packages locally with `npm install` (no need to specify the packages, because they will get picked up in your package.json file)
+
+Note that you will have to `exec` install in your test container for the packages to be used there as well.
+
+## Logs
+
+Use the `./dock dev logs` command to follow the logs in development (they'll be hidden if you start your development server with the `--detached` flag).

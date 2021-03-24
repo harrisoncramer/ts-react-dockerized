@@ -1,7 +1,7 @@
 ## https://mherman.org/blog/dockerizing-a-react-app/
 version: "3"
 services:
-  react:
+  react_test:
     container_name: "ts-react"
     image: "ts-react:test"
     volumes:

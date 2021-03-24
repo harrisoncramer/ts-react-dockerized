@@ -6,7 +6,6 @@ services:
     image: "ts-react:development"
     volumes:
       - ./src:/app/src
-      - /app/node_modules
     restart: always
     build:
       context: ./

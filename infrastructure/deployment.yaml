@@ -48,7 +48,7 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: kingofcramers/ts-react
+        image: kingofcramers/ts-react # Replace this with the path to your image
         imagePullPolicy: Always 
         ports:
           - containerPort: 80
