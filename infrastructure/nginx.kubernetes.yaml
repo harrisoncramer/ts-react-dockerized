@@ -61,16 +61,3 @@ spec:
         - name: nginx-conf
           configMap:
             name: nginx-conf
-#---
-#apiVersion: v1
-#kind: Service
-#metadata:
-  #name: nginx
-#spec:
-  #type: ClusterIP
-  #ports:
-  #- port: 80
-    #protocol: TCP
-    #targetPort: 80
-  #selector:
-    #app: nginx 
