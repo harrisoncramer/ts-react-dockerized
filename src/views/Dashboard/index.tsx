@@ -42,7 +42,7 @@ const Dashboard = (): ReactElement | null => {
               Links
             </Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/dropdown1">
+              <NavDropdown.Item as={Link} to="/addpagelink">
                 Action
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/dropdown2">
