@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FORGOT_MUTATION } from "../../graphql/queries";
 import { useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-import { Button, Form, FormControl } from "react-bootstrap";
+import { Button, Form, FormControl, Spinner } from "react-bootstrap";
 
 //import "./style.scss";
 const Forgot = () => {
@@ -45,7 +45,13 @@ const Forgot = () => {
       </div>
     );
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <Spinner animation="border" role="status">
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    );
+  }
 
   return (
     <div className="login-wrapper">

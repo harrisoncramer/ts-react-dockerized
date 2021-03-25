@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CHANGE_PASSWORD_MUTATION } from "../../graphql/queries";
 import { useMutation } from "@apollo/client";
 import { useHistory, useParams } from "react-router-dom";
-import { Button, Form, FormControl } from "react-bootstrap";
+import { Button, Form, FormControl, Spinner } from "react-bootstrap";
 import Modal from "../Modal";
 
 //import "./style.scss";
@@ -38,7 +38,9 @@ const ResetPassword = () => {
   const returnToLogin = () => history.push("/");
 
   return loading ? (
-    <div>Loading...</div>
+    <Spinner animation="border" role="status">
+      <span className="sr-only">Loading...</span>
+    </Spinner>
   ) : (
     <div className="login-wrapper">
       <h2 className="login-header">New password:</h2>

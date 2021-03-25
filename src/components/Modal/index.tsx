@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Modal as BootstrapModal } from "react-bootstrap";
+import { Modal as BootstrapModal } from "react-bootstrap";
 
 type ModalProps = {
   heading: string;
@@ -15,11 +15,6 @@ const Modal = (props: React.PropsWithChildren<ModalProps>) => {
         <BootstrapModal.Title>{props.heading}</BootstrapModal.Title>
       </BootstrapModal.Header>
       <BootstrapModal.Body>{props.children}</BootstrapModal.Body>
-      <BootstrapModal.Footer>
-        <Button variant="secondary" size="sm" onClick={handleClose}>
-          Close
-        </Button>
-      </BootstrapModal.Footer>
     </BootstrapModal>
   );
 };

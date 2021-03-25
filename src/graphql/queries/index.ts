@@ -30,6 +30,10 @@ export const SIMPLE_QUERY = gql`
   query {
     me {
       name
+      pagelinks {
+        id
+        link
+      }
     }
   }
 `;

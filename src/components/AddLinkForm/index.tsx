@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Spinner } from "react-bootstrap";
 import simApiCall from "../../utils/simApiCall";
 
 type AddLinkFormProps = {
@@ -51,7 +51,11 @@ const AddLinkForm = ({ onSubmit }: AddLinkFormProps): React.ReactElement => {
           </Button>
         </Form.Group>
       </Form>
-      {loading && <div>Validating link...</div>}
+      {loading && (
+        <Spinner animation="border" role="status">
+          <span className="sr-only">Validating...</span>
+        </Spinner>
+      )}
       {error && <div>That is not a valid link.</div>}
     </div>
   );

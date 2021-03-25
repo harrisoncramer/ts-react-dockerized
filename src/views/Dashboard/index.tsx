@@ -9,11 +9,17 @@ import {
   Form,
   FormControl,
   Button,
+  Spinner,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import Modal from "../../components/Modal";
 import AddLinkForm from "../../components/AddLinkForm";
+
+type PageLink = {
+  id: string;
+  link: string;
+};
 
 const Dashboard = (): ReactElement | null => {
   const [filter, setFilter] = useQueryParam("filter", StringParam);
@@ -36,7 +42,13 @@ const Dashboard = (): ReactElement | null => {
     setFilter(val);
   };
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <Spinner animation="border" role="status">
+        <span className="sr-only">Loading...</span>
+      </Spinner>
+    );
+  }
   if (error) return <div>Something wrong with server: ${error.message}</div>;
   return (
     <div>
@@ -78,6 +90,10 @@ const Dashboard = (): ReactElement | null => {
         </Navbar.Collapse>
       </Navbar>
       <p>Welcome, {data.me.name}</p>
+      <div>Links</div>
+      {data.me.pagelinks.map((x: PageLink) => (
+        <p key={x.id}>{x.link}</p>
+      ))}
     </div>
   );
 };
