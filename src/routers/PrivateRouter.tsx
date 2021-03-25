@@ -9,6 +9,7 @@ import NotFound from "../views/NotFound/NotFound";
 import Header from "../components/Header/Header";
 import Footer from "../components/Footer/Footer";
 import Settings from "../components/Settings/Settings";
+//import  from "../components/"
 
 export interface PrivateRouterProps {
   removeToken: () => void;

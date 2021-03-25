@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useState } from "react";
 import { useQuery } from "@apollo/react-hooks";
 import { useQueryParam, StringParam } from "use-query-params";
 import { SIMPLE_QUERY } from "../../graphql/queries";
@@ -12,8 +12,12 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+import Modal from "../../components/Modal";
+import AddLinkForm from "../../components/AddLinkForm";
+
 const Dashboard = (): ReactElement | null => {
   const [filter, setFilter] = useQueryParam("filter", StringParam);
+  const [addModal, setAddModal] = useState(false);
   const { loading, error, data } = useQuery(SIMPLE_QUERY, {
     fetchPolicy: "no-cache",
   });
@@ -21,6 +25,11 @@ const Dashboard = (): ReactElement | null => {
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //console.log(filter);
+  };
+
+  const handleAddLink = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Submit link to database...");
   };
 
   const handleOnChange = (val: string): void => {
@@ -31,29 +40,27 @@ const Dashboard = (): ReactElement | null => {
   if (error) return <div>Something wrong with server: ${error.message}</div>;
   return (
     <div>
+      <Modal heading="Enter Link" show={addModal} setShow={setAddModal}>
+        <AddLinkForm onSubmit={handleAddLink} />
+      </Modal>
       <Navbar bg="light" expand="lg">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link as={Link} to="/dashboard">
+            <Nav.Link as={Link} to="/">
               Dashboard
             </Nav.Link>
-            <Nav.Link as={Link} to="/link">
+            <Nav.Link as={Link} to="/links">
               Links
             </Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item as={Link} to="/addpagelink">
-                Action
+            <NavDropdown title="Configure" id="basic-nav-dropdown">
+              <NavDropdown.Item onSelect={() => setAddModal(true)}>
+                Add Link
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/dropdown2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/dropdown3">
-                Something
-              </NavDropdown.Item>
+              <NavDropdown.Item>Delete Link</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item as={Link} to="/dropdown4">
-                Something Else
+              <NavDropdown.Item as={Link} to="/settings">
+                Settings
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>

@@ -10,19 +10,17 @@ const Modal = (props: React.PropsWithChildren<ModalProps>) => {
   const handleClose = () => props.setShow(false);
 
   return (
-    <>
-      <BootstrapModal show={props.show} onHide={handleClose}>
-        <BootstrapModal.Header closeButton>
-          <BootstrapModal.Title>{props.heading}</BootstrapModal.Title>
-        </BootstrapModal.Header>
-        <BootstrapModal.Body>{props.children}</BootstrapModal.Body>
-        <BootstrapModal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-        </BootstrapModal.Footer>
-      </BootstrapModal>
-    </>
+    <BootstrapModal show={props.show} onHide={handleClose}>
+      <BootstrapModal.Header closeButton>
+        <BootstrapModal.Title>{props.heading}</BootstrapModal.Title>
+      </BootstrapModal.Header>
+      <BootstrapModal.Body>{props.children}</BootstrapModal.Body>
+      <BootstrapModal.Footer>
+        <Button variant="secondary" size="sm" onClick={handleClose}>
+          Close
+        </Button>
+      </BootstrapModal.Footer>
+    </BootstrapModal>
   );
 };
 
