@@ -53,3 +53,11 @@ export const FORGOT_MUTATION = gql`
     forgotPassword(email: $email)
   }
 `;
+
+export const ADD_PAGE_LINK = gql`
+  mutation AddLink($link: String!) {
+    addPageLink(input: { link: $link }) {
+      id
+    }
+  }
+`;

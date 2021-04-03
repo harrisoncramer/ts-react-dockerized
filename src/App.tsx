@@ -18,7 +18,7 @@ function App(): React.ReactElement {
 
   return (
     <ApolloProvider client={client}>
-      <Router />;
+      <Router />
     </ApolloProvider>
   );
 }

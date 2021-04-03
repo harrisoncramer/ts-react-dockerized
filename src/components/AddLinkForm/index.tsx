@@ -1,18 +1,45 @@
-import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import React, { useEffect, useRef, useState, RefObject } from "react";
 import { Form, Button, Spinner } from "react-bootstrap";
+import { ADD_PAGE_LINK } from "../../graphql/queries";
 import simApiCall from "../../utils/simApiCall";
 
 type AddLinkFormProps = {
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleAddLink: () => void;
 };
-const AddLinkForm = ({ onSubmit }: AddLinkFormProps): React.ReactElement => {
+const AddLinkForm = ({
+  handleAddLink,
+}: AddLinkFormProps): React.ReactElement => {
   const [isValid, setIsValid] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [link, setLink] = useState("");
+
+  const [addLink] = useMutation(ADD_PAGE_LINK, { variables: { link } });
+  const buttonRef = useRef() as RefObject<HTMLButtonElement>;
+
+  useEffect(() => {
+    if (isValid) {
+      if (!buttonRef.current) return;
+      buttonRef.current.focus();
+    }
+  }, [isValid]);
 
   const add = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Submitting link...");
+    setLoading(true);
+    setError(false);
+    addLink()
+      .then(() => {
+        setLoading(false);
+        setError(false);
+        handleAddLink();
+      })
+      .catch((err) => {
+        alert("Could not submit link.");
+        setLoading(false);
+        setIsValid(false);
+      });
   };
 
   const validate = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -44,9 +71,14 @@ const AddLinkForm = ({ onSubmit }: AddLinkFormProps): React.ReactElement => {
             type="text"
             placeholder="Enter URL"
             disabled={isValid}
+            onChange={(e) => setLink(e.target.value)}
           />
           <Form.Text className="text-muted"></Form.Text>
-          <Button variant={!isValid ? "primary" : "success"} type="submit">
+          <Button
+            variant={!isValid ? "primary" : "success"}
+            ref={buttonRef}
+            type="submit"
+          >
             {!isValid ? "Validate" : "Submit"}
           </Button>
         </Form.Group>

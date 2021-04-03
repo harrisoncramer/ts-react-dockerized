@@ -8,11 +8,12 @@ import {
   Nav,
   Form,
   FormControl,
-  Button,
   Spinner,
+  ListGroup,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+import Datum from "../../components/Datum";
 import Modal from "../../components/Modal";
 import AddLinkForm from "../../components/AddLinkForm";
 
@@ -24,18 +25,17 @@ type PageLink = {
 const Dashboard = (): ReactElement | null => {
   const [filter, setFilter] = useQueryParam("filter", StringParam);
   const [addModal, setAddModal] = useState(false);
-  const { loading, error, data } = useQuery(SIMPLE_QUERY, {
+  const { loading, error, data, refetch } = useQuery(SIMPLE_QUERY, {
     fetchPolicy: "no-cache",
   });
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //console.log(filter);
   };
 
-  const handleAddLink = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Submit link to database...");
+  const handleAddLink = () => {
+    setAddModal(false);
+    refetch();
   };
 
   const handleOnChange = (val: string): void => {
@@ -53,7 +53,7 @@ const Dashboard = (): ReactElement | null => {
   return (
     <div>
       <Modal heading="Enter Link" show={addModal} setShow={setAddModal}>
-        <AddLinkForm onSubmit={handleAddLink} />
+        <AddLinkForm handleAddLink={handleAddLink} />
       </Modal>
       <Navbar bg="light" expand="lg">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -69,31 +69,31 @@ const Dashboard = (): ReactElement | null => {
               <NavDropdown.Item onSelect={() => setAddModal(true)}>
                 Add Link
               </NavDropdown.Item>
-              <NavDropdown.Item>Delete Link</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item as={Link} to="/settings">
-                Settings
+                Account Settings
               </NavDropdown.Item>
             </NavDropdown>
           </Nav>
           <Form inline onSubmit={handleSearch}>
             <FormControl
               type="text"
-              placeholder="Search"
+              placeholder={filter || "Search"}
               className="mr-sm-2"
               onChange={(e) => handleOnChange(e.target.value)}
             />
-            <Button type="submit" variant="outline-success">
-              Search
-            </Button>
           </Form>
         </Navbar.Collapse>
       </Navbar>
-      <p>Welcome, {data.me.name}</p>
-      <div>Links</div>
-      {data.me.pagelinks.map((x: PageLink) => (
-        <p key={x.id}>{x.link}</p>
-      ))}
+      <ListGroup>
+        {data.me.pagelinks
+          .filter((x: PageLink) => {
+            return x.link.match(filter || "");
+          })
+          .map((x: PageLink) => (
+            <Datum key={x.id} link={x.link} />
+          ))}
+      </ListGroup>
     </div>
   );
 };

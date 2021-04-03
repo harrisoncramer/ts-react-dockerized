@@ -13,11 +13,6 @@ export interface PublicRouterProps {
 const PublicRouter = ({ setToken }: PublicRouterProps): React.ReactElement => (
   <BrowserRouter>
     <Switch>
-      <Route path="/" exact>
-        <Login setToken={setToken} />
-      </Route>
-    </Switch>
-    <Switch>
       <Route path="/signup">
         <Signup setToken={setToken} />
       </Route>
@@ -30,6 +25,11 @@ const PublicRouter = ({ setToken }: PublicRouterProps): React.ReactElement => (
     <Switch>
       <Route path="/user/forgot-password/:token">
         <ResetPassword />
+      </Route>
+    </Switch>
+    <Switch>
+      <Route path="/">
+        <Login setToken={setToken} />
       </Route>
     </Switch>
   </BrowserRouter>
