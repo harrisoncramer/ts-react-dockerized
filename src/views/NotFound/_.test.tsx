@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "../../util/tests";
+import { render } from "@testing-library/react";
 import NotFound from "./NotFound";
 
 describe("NotFound", () => {

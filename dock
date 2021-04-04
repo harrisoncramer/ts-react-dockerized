@@ -63,7 +63,7 @@ elif [[ "$args" == "dev logs" ]]; then
 elif [[ "$args" == "test build" ]]; then
     docker-compose -f docker-compose.test.yml build
 elif [[ "$args" == "test start" ]]; then
-    docker-compose -f docker-compose.test.yml run --rm react
+    docker-compose -f docker-compose.test.yml run --rm react_test
 else
   echo "$usage"
 fi
