@@ -28,7 +28,7 @@ const PublicRouter = ({ setToken }: PublicRouterProps): React.ReactElement => (
       </Route>
     </Switch>
     <Switch>
-      <Route path="/">
+      <Route path="/" exact={true}>
         <Login setToken={setToken} />
       </Route>
     </Switch>

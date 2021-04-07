@@ -23,9 +23,11 @@ It's built to use a GraphQL backend, like [this](https://github.com/KingOfCramer
 
 ## Production
 
-In production, this application is built into static assets and served up with Nginx.
+In production, this application can be served standalone or via Kubernetes.
 
-The full application is designed to be run through kubernetes. The configuration files are stored inside the `infrastructure` folder. There is a separate readme for configuring your cluster contained in that folder.
+To serve it standalone, simply run: `docker run -d -p 80:80 kingofcramers/ts-react` or whatever you elect to name your docker image.
+
+In kubernetes, the configuration files are stored inside the `infrastructure` folder. There is a separate readme for configuring your cluster contained in that folder.
 
 ## Installing NPM Packages (development)
 
