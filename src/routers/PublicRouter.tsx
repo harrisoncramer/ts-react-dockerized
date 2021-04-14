@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 
 import Login from "../components/Login/Login";
 import Forgot from "../components/Forgot/Forgot";
@@ -28,9 +28,12 @@ const PublicRouter = ({ setToken }: PublicRouterProps): React.ReactElement => (
       </Route>
     </Switch>
     <Switch>
-      <Route path="/" exact={true}>
+      <Route path="/" exact>
         <Login setToken={setToken} />
       </Route>
+    </Switch>
+    <Switch>
+      <Route render={() => <Redirect to="/" />} />
     </Switch>
   </BrowserRouter>
 );

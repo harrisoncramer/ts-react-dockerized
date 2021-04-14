@@ -62,8 +62,8 @@ const Dashboard = (): ReactElement | null => {
             <Nav.Link as={Link} to="/">
               Dashboard
             </Nav.Link>
-            <Nav.Link as={Link} to="/links">
-              Links
+            <Nav.Link as={Link} to="/data">
+              Data
             </Nav.Link>
             <NavDropdown title="Configure" id="basic-nav-dropdown">
               <NavDropdown.Item onSelect={() => setAddModal(true)}>

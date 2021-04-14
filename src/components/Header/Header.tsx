@@ -24,7 +24,7 @@ const Header = function Header({ removeToken }: HeaderProps) {
       await logout();
       removeToken();
     } catch (err) {
-      console.log("Could not log out...");
+      alert("Could not log out.");
     }
   };
 

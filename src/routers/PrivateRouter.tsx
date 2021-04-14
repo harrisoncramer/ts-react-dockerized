@@ -32,7 +32,7 @@ const PrivateRouter = ({
           <About />
         </Route>
         <Route path="/settings">
-          <Settings />
+          <Settings removeToken={removeToken} />
         </Route>
         <Route>
           <NotFound />

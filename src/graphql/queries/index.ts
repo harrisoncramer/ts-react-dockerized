@@ -26,6 +26,12 @@ export const LOGOUT_MUTATION = gql`
   }
 `;
 
+export const DELETE_ACCOUNT = gql`
+  mutation DeleteAccount($password: String!, $email: String!) {
+    unregister(password: $password, email: $email)
+  }
+`;
+
 export const SIMPLE_QUERY = gql`
   query {
     me {
